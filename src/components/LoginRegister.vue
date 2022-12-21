@@ -1,6 +1,56 @@
-<template>
-  <!-- make two column, left side for register, rightside for login -->
+<script>
+import axios from "axios"
 
+export default {
+  name: "LoginRegister",
+  data() {
+    return {
+      baseUrl: "https://news-portal-api-production.up.railway.app",
+      email: "",
+      password: "",
+
+      emailRegister: "",
+      passwordRegister: "",
+      name: "",
+      phone: "",
+      address: "",
+      isLogin: true,
+    }
+  },
+  methods: {
+    async login() {
+      try {
+        const response = await axios.post(`${this.baseUrl}/users/login`, {
+          email: this.email,
+          password: this.password,
+        })
+
+        localStorage.setItem("access_token", response.data.access_token)
+
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async register() {
+      try {
+        const response = await axios.post(`${this.baseUrl}/users/register`, {
+          email: this.emailRegister,
+          password: this.passwordRegister,
+          name: this.name,
+          phone: this.phone,
+          address: this.address,
+        })
+        console.log(response.data)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+  },
+
+}
+</script>
+
+<template>
   <div class="container">
     <div class="row">
       <div class="col-6">
@@ -76,55 +126,3 @@
     </div>
   </div>
 </template>
-
-<script>
-import axios from "axios"
-
-export default {
-  name: "LoginRegister",
-  data() {
-    return {
-      baseUrl: "https://news-portal-api-production.up.railway.app",
-      email: "",
-      password: "",
-
-      emailRegister: "",
-      passwordRegister: "",
-      name: "",
-      phone: "",
-      address: "",
-      isLogin: true,
-    }
-  },
-  methods: {
-    async login() {
-      try {
-        const response = await axios.post(`${this.baseUrl}/users/login`, {
-          email: this.email,
-          password: this.password,
-        })
-
-        localStorage.setItem("access_token", response.data.access_token)
-
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    async register() {
-      try {
-        const response = await axios.post(`${this.baseUrl}/users/register`, {
-          email: this.emailRegister,
-          password: this.passwordRegister,
-          name: this.name,
-          phone: this.phone,
-          address: this.address,
-        })
-        console.log(response.data)
-      } catch (error) {
-        console.log(error)
-      }
-    },
-  },
-
-}
-</script>

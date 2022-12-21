@@ -1,3 +1,39 @@
+<script>
+import axios from "axios"
+
+export default {
+  data() {
+    return {
+      baseUrl: "https://news-portal-api-production.up.railway.app",
+      news: [],
+      selectedStatus: "",
+      statuses: ["Active", "Inactive", "Archived"],
+    }
+  },
+
+  methods: {
+    async getNews() {
+      try {
+        const response = await axios.get(`${this.baseUrl}/news`, {
+          headers: {
+            access_token: `${localStorage.getItem("access_token")}`,
+          },
+        })
+
+        console.log(response.data)
+        this.news = response.data.data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+  },
+
+  async created() {
+    await this.getNews()
+  },
+}
+</script>
+
 <template>
   <div class="container">
     <div class="row">
@@ -46,38 +82,4 @@
   </div>
 </template>
 
-<script>
-import axios from "axios"
 
-export default {
-  data() {
-    return {
-      baseUrl: "https://news-portal-api-production.up.railway.app",
-      news: [],
-      selectedStatus: "",
-      statuses: ["Active", "Inactive", "Archived"],
-    }
-  },
-
-  methods: {
-    async getNews() {
-      try {
-        const response = await axios.get(`${this.baseUrl}/news`, {
-          headers: {
-            access_token: `${localStorage.getItem("access_token")}`,
-          },
-        })
-
-        console.log(response.data)
-        this.news = response.data.data
-      } catch (error) {
-        console.log(error)
-      }
-    },
-  },
-
-  async created() {
-    await this.getNews()
-  },
-}
-</script>

@@ -1,3 +1,21 @@
+<script>
+export default {
+  name: "Navbar",
+  props: {
+    navigation: {
+      type: Array,
+      required: true,
+    },
+  },
+
+  methods: {
+    logout() {
+      localStorage.clear()
+    },
+  },
+}
+</script>
+
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
@@ -25,23 +43,5 @@
     </div>
   </nav>
 </template>
-
-<script>
-export default {
-  name: "Navbar",
-  props: {
-    navigation: {
-      type: Array,
-      required: true,
-    },
-  },
-
-  methods: {
-    logout() {
-      localStorage.clear()
-    },
-  },
-}
-</script>
 
 <style scoped></style>
